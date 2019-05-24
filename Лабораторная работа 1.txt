@@ -1,0 +1,95 @@
+Выполнили работу Филиев Рамазан и Ногтиков Никита
+
+
+
+CREATE TABLE public."Hospital1"
+(
+h_id_kompany serial primary key,
+h_name character varying(40) NOT NULL, 
+h_surname character varying(60) NOT NULL, 
+h_patronymic character varying(80), 
+h_daybirth date NOT NULL,
+h_phone character varying(20), 
+h_bloodtype character varying(40),
+h_doctorid character varying(40),
+h_tabl character varying(40)
+)
+insert into public."Hospital1"(h_name,h_surname,h_patronymic,h_daybirth,h_phone,h_bloodtype,h_doctorid,h_tabl) values ('Рамазан','Серов','Андреевич','15.02.1994','89032332323','1+','1','red'); 
+insert into public."Hospital1"(h_name,h_surname,h_patronymic,h_daybirth,h_phone,h_bloodtype,h_doctorid,h_tabl) values ('Остап','Кругш','Алексеевич','11.06.2001','89331354355','2-','1','green'); 
+insert into public."Hospital1"(h_name,h_surname,h_patronymic,h_daybirth,h_phone,h_bloodtype,h_doctorid,h_tabl) values ('Никита','Выкрутасный','Андреевич','12.04.1968','89076456644','2+','1','black');  
+insert into public."Hospital1"(h_name,h_surname,h_patronymic,h_daybirth,h_phone,h_bloodtype,h_doctorid,h_tabl) values ('Андрий','Нипомнящих','Сергеевич','12.05.1996','89076455539','3+','4','green'); 
+insert into public."Hospital1"(h_name,h_surname,h_patronymic,h_daybirth,h_phone,h_bloodtype,h_doctorid,h_tabl) values ('Вадик','Бутылкин','Станиславович','17.05.1980','89076664539','2-','4','white');  
+insert into public."Hospital1"(h_name,h_surname,h_patronymic,h_daybirth,h_phone,h_bloodtype,h_doctorid,h_tabl) values ('Лелик','Беспредельный','Киргизович','29.01.1970','89065247650','1-','2','red');
+insert into public."Hospital1"(h_name,h_surname,h_patronymic,h_daybirth,h_phone,h_bloodtype,h_doctorid,h_tabl) values ('Евгений','Смирнов','Евгеньевич','30.07.1999','89075498833','4+','4','blue');
+insert into public."Hospital1"(h_name,h_surname,h_patronymic,h_daybirth,h_phone,h_bloodtype,h_doctorid,h_tabl) values ('Михаил','Крылов','Андреевич','01.07.1997','89077774499','3-','2','white');
+insert into public."Hospital1"(h_name,h_surname,h_patronymic,h_daybirth,h_phone,h_bloodtype,h_doctorid,h_tabl) values ('Тихон','Раскольников','Георгиевич','09.09.2001','89003336434','2+','2','white');
+insert into public."Hospital1"(h_name,h_surname,h_patronymic,h_daybirth,h_phone,h_bloodtype,h_doctorid,h_tabl) values ('Станислав','Корсаков','Петрович','02.01.1996','89065244451','2-','3','red');
+insert into public."Hospital1"(h_name,h_surname,h_patronymic,h_daybirth,h_phone,h_bloodtype,h_doctorid,h_tabl) values ('ЛОХТИКОВ','НИКИТА','ПЕТУХОВИЧ','10.02.1997','89065243957','3+','3','green');
+
+
+select * from public."Hospital1"
+
+
+CREATE TABLE public."Doctors1"
+(
+d_id_kompany serial primary key,
+d_name character varying(40) NOT NULL, 
+d_surname character varying(60) NOT NULL, 
+d_patronymic character varying(80), 
+d_regjob date DEFAULT CURRENT_DATE, 
+d_phone character varying(20), 
+h_doctorid character varying(40)
+)
+
+insert into public."Doctors1"(d_name,d_surname,d_patronymic,d_regjob,d_phone,h_doctorid) values ('Алексей','Навальный','Петрович','15.07.2011','89032552323','1'); 
+insert into public."Doctors1"(d_name,d_surname,d_patronymic,d_regjob,d_phone,h_doctorid) values ('Владимир','Путин','Алексеевич','19.12.2009','89333358755','2'); 
+insert into public."Doctors1"(d_name,d_surname,d_patronymic,d_regjob,d_phone,h_doctorid) values ('Дмитрий','Медведев','Андреевич','02.04.2013','89076456234','3');  
+insert into public."Doctors1"(d_name,d_surname,d_patronymic,d_regjob,d_phone,h_doctorid) values ('Тихон','Многозадов','Сергеевич','29.06.2010','89076455789','4'); 
+
+CREATE TABLE public."Tabl1"
+(
+t_id_kompany serial primary key,
+t_name character varying(40) NOT NULL, 
+t_colour character varying(60) NOT NULL, 
+t_datemanufacture date DEFAULT CURRENT_DATE
+)
+insert into public."Tabl1"(t_name,t_colour,t_datemanufacture) values ('Анальгин','red','15.05.2019'); 
+insert into public."Tabl1"(t_name,t_colour,t_datemanufacture) values ('Аспирин','black','16.05.2019'); 
+insert into public."Tabl1"(t_name,t_colour,t_datemanufacture) values ('Эспумизан','blue','11.05.2019');  
+insert into public."Tabl1"(t_name,t_colour,t_datemanufacture) values ('Мезим','white','17.05.2019'); 
+insert into public."Tabl1"(t_name,t_colour,t_datemanufacture) values ('Пенталгин','green','14.05.2019'); 
+
+
+1 запрос выводит пациентов у которого доктор под номером 1
+select h_name,h_surname,h_patronymic
+from public. "Hospital1"
+where h_doctorid='1'
+
+2 запрос связывает таблицы и выводит лечащих врачей
+select P.h_name, P.h_surname, V.d_doctorid, V.d_surname
+from "Hospital1" P inner join "Doctors1" V on P.h_doctorid=V.d_doctorid
+
+3 запрос выдает самого старшего пациента
+select h_name,h_surname,h_patronymic
+from public. "Hospital1"
+where h_daybirth=(select min(h_daybirth)from public. "Hospital1")
+
+4 запрос связывает таблицы и выводит лекарства
+select P.h_name, P.h_surname, V.t_colour, V.t_name
+from "Hospital1" P inner join "Tabl1" V on P.h_tabl=V.t_colour
+
+5 запрос выводит всю информацию о пациентах принимающих green таблетки
+select h_name,h_surname,h_patronymic,h_daybirth,h_phone,h_bloodtype,h_doctorid
+from public. "Hospital1"
+where h_tabl='green'
+
+6 запрос выводит людей с одинаковой группой крови и сортирует по фамилиям
+select h_name,h_surname,h_patronymic
+from public. "Hospital1"
+where h_bloodtype='2+'
+order by h_surname
+
+7 запрос ФИО человека по номеру телефона
+select h_name,h_surname,h_patronymic
+from public. "Hospital1"
+where h_phone='89003336434'
